@@ -1,7 +1,6 @@
-package mineSweep;
-
 public class Field {
-	private boolean flag, open;
+	protected boolean flag;
+	protected boolean open;
 		
 	
 	public Field(boolean flag, boolean open) {
@@ -10,7 +9,7 @@ public class Field {
 	}
 
 
-	public boolean isFlag() {
+	public boolean getFlag() {
 		return flag;
 	}
 
@@ -20,7 +19,7 @@ public class Field {
 	}
 
 
-	public boolean isOpen() {
+	public boolean getOpen() {
 		return open;
 	}
 

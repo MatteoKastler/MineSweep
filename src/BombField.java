@@ -1,7 +1,4 @@
-package mineSweep;
-
 public class BombField extends Field {
-
 	public BombField(boolean flag, boolean open) {
 		super(flag, open);
 	}
