@@ -24,8 +24,8 @@ public class Playground {
 		w = width;
 		//set bombs on random field
 		for(int i = 0; i<bombs; i++) {
-			int x = ThreadLocalRandom.current().nextInt(0, width); //+1
-			int y = ThreadLocalRandom.current().nextInt(0, height); //+1
+			int x = ThreadLocalRandom.current().nextInt(0, width);
+			int y = ThreadLocalRandom.current().nextInt(0, height);
 			if(matrix[y][x] instanceof BombField) {
 				i--;
 			}else {
@@ -91,6 +91,10 @@ public class Playground {
 	public static boolean finished() {
 		for(Field[] r : matrix){
 			for(Field f : r) {
+				if(f instanceof BombField && f.getOpen()) {
+					System.out.println("you lost");
+					return true;
+				}
 				if(f instanceof BombField && !f.getFlag()) return false;
 			}
 		}
@@ -112,6 +116,11 @@ public class Playground {
 				break;
 			case "o":
 				matrix[y][x].setOpen(true);
+				if(matrix[y][x] instanceof EmptyField) {
+					if(((EmptyField)matrix[y][x]).getBombsCnt() == 0) {
+						checkNearFields(x,y);
+					}
+				}
 				break;
 			default:
 				System.out.println("input not valid");
@@ -122,11 +131,23 @@ public class Playground {
 		System.out.println();
 		System.out.println();
 	}
-	
-	
-	
-	
-	
-	
-	
+	//funzt ned, array mit checked fields
+	public static void checkNearFields(int x, int y) {
+		try{
+			if(matrix[y][x] instanceof EmptyField) {
+				if(((EmptyField)matrix[y][x]).getBombsCnt() == 0) {
+					matrix[y][x].setOpen(true);
+					for(int i = -1; i < 2; i++) {
+						for(int j = -1; j < 2; j++) {
+							checkNearFields(j+x, i+y);
+						}
+					}
+				}else{
+					matrix[y][x].setOpen(true);
+				}
+			}
+		}catch(ArrayIndexOutOfBoundsException e) {
+			return;
+		}
+	}
 }
