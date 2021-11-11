@@ -115,12 +115,12 @@ public class Playground {
 				matrix[y][x].setFlag(true);
 				break;
 			case "o":
-				matrix[y][x].setOpen(true);
 				if(matrix[y][x] instanceof EmptyField) {
 					if(((EmptyField)matrix[y][x]).getBombsCnt() == 0) {
 						checkNearFields(x,y);
 					}
 				}
+				matrix[y][x].setOpen(true);
 				break;
 			default:
 				System.out.println("input not valid");
@@ -131,10 +131,9 @@ public class Playground {
 		System.out.println();
 		System.out.println();
 	}
-	//funzt ned, array mit checked fields
 	public static void checkNearFields(int x, int y) {
 		try{
-			if(matrix[y][x] instanceof EmptyField) {
+			if(matrix[y][x] instanceof EmptyField && !matrix[y][x].getOpen()) {
 				if(((EmptyField)matrix[y][x]).getBombsCnt() == 0) {
 					matrix[y][x].setOpen(true);
 					for(int i = -1; i < 2; i++) {
